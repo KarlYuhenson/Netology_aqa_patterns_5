@@ -1,3 +1,4 @@
+        package ru.netology;
 
         import com.codeborne.selenide.SelenideElement;
         import com.codeborne.selenide.logevents.SelenideLogger;
@@ -12,6 +13,7 @@
         import static com.codeborne.selenide.Selectors.byText;
         import static com.codeborne.selenide.Selenide.*;
         import static com.codeborne.selenide.Selenide.open;
+        import static ru.netology.DataGenerator.generateByCard;
 
 
         public class AplicationCardDeliveryTest {SelenideElement form = $("form");
@@ -53,7 +55,7 @@
             @Test
             void shouldChangeDeliveryDate() {
                 String randomCity = DataGenerator.getRandomCity();
-                ru.netology.UserNameInfo userFullName = DataGenerator.generateByCard();
+                UserNameInfo userFullName = generateByCard();
                 String phoneNumber = faker.phoneNumber().phoneNumber();
 
                 cityForm.setValue(randomCity);

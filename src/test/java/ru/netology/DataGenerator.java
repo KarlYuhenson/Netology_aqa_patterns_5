@@ -1,3 +1,5 @@
+package ru.netology;
+
 import com.github.javafaker.Faker;
 
 import java.time.LocalDate;
@@ -8,9 +10,9 @@ import java.util.Random;
 public class DataGenerator {
     public DataGenerator() {
     }
-    public static ru.netology.UserNameInfo generateByCard() {
+    public static UserNameInfo generateByCard() {
         Faker faker = new Faker(new Locale("ru"));
-        return new ru.netology.UserNameInfo(
+        return new UserNameInfo(
                 faker.name().lastName(),
                 faker.name().firstName()
         );
