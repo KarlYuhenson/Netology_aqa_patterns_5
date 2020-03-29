@@ -1,23 +1,12 @@
 package ru.netology;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.Keys;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Random;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.open;
-
-import static ru.netology.DataGenerator.generateByCard;
 
 public class AplicationCardDeliveryTest {
     SelenideElement form = $("form");
@@ -32,41 +21,24 @@ public class AplicationCardDeliveryTest {
     SelenideElement replanNotification = $("[data-test-id= 'replan-notification']");
     SelenideElement replanButton = $(byText("Перепланировать"));
 
-    private Faker faker;
-
-    @BeforeAll
-    static void setUpAllAlure() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
-    }
-
-    @BeforeEach
-    void setUpAll() {
-        faker = new Faker(new Locale("ru"));
-    }
 
     @BeforeEach
     void openHost() {
         open("http://localhost:9999");
     }
 
-    @AfterAll
-    static void tearDownAll() {
-        SelenideLogger.removeListener("allure");
-    }
 
-    @DisplayName("test success if delivery date change")
     @Test
     void shouldChangeDeliveryDate() {
-        String randomCity = DataGenerator.getRandomCity();
-        UserNameInfo userFullName = generateByCard();
-        String phoneNumber = faker.phoneNumber().phoneNumber();
+        String randomCity = CitiesGenerator.getRandomCities();
+        String randomNames = NamesGenerator.getRandomNames();
 
         cityForm.setValue(randomCity);
         cityClick.waitUntil(exist, 5000).click();
         dateForm.doubleClick().sendKeys(Keys.BACK_SPACE);
         dateForm.setValue(DataGenerator.getFutureDate(3));
-        nameForm.setValue(String.valueOf(userFullName));
-        phoneForm.setValue(phoneNumber);
+        nameForm.setValue(randomNames);
+        phoneForm.setValue("89261111111");
         agreementForm.click();
         button.click();
         notificationSuccess.waitUntil(visible, 15000);
